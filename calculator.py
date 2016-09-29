@@ -7,12 +7,18 @@ calculator program yourself in this file.
 
 from arithmetic import *
 
-def get_number(tokens, index):
+def get_number(num_only):
 	"""returns number for arithmetic from string input"""
-	if "." in tokens[index]:
-		return float(tokens[index])
-	else:
-		return int(tokens[index])
+	num_for_math = []
+	for item in num_only:
+		if "." in item:
+			num_for_math.append(float(item))
+		else:
+			num_for_math.apspend(int(item))
+	return num_for_math
+
+def my_reduce(function, iterable):
+	
 
 
 def operator_type(tokens):
@@ -27,26 +33,39 @@ def calc_shell():
 			tokens = calc_input.split(' ')
 			if tokens[0] == "q":
 				break
-			num1 = get_number(tokens, 1)
-			if len(tokens) == 3:
-				num2 = get_number(tokens, 2)
+			num1_not_transformed = tokens[1]
+			if '.' in num1_not_transformed:
+				num1 = float(num1_not_transformed)
+			else:
+				num1 = int(num1_not_transformed)
+			if len(tokens) > 2:
+				nums_final = get_number(num_only)
+			num_only = tokens[1:]
 			operator = operator_type(tokens)
 			if operator == "+":
-				print add(num1, num2)
+				addition = reduce(add, nums_final)
+				print "%.2f" % (addition)
 			elif operator == "-":
-				print subtract(num1, num2)
+				subtracting = reduce(subtract, nums_final)
+				print "%.2f" % (subtracting)
 			elif operator == "*":
-				print multiply(num1, num2)
+				multiplying = reduce(multiply, nums_final)
+				print "%.2f" % (multiplying)
 			elif operator == "/":
-				print divide(num1, num2)
+				division = reduce(divide, nums_final)
+				print "%.2f" % (division)
 			elif operator == "square":
-				print square(num1)
+				squaring = square(num1)
+				print "%.2f" % (squaring)
 			elif operator == "cube":
-				print cube(num1)
+				cubed = cube(num1)
+				print "%.2f" % (cubed)
 			elif operator == 'pow':
-				print power(num1, num2)
+				powered = reduce(power, nums_final)
+				print "%.2f" % (powered)
 			elif operator == 'mod':
-				print mod(num1, num2)
+				modular = reduce(mod, nums_final)
+				print "%.2f" % (modular)
 		except (ValueError, UnboundLocalError, IndexError):
 			print "That input was not valid. Please try again."
 
